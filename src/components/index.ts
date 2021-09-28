@@ -4,3 +4,4 @@ export { DismissibleAlert } from './dismissableAlert';
 export { SchedulerTaskRow } from './schedulerTaskRow';
 export type { SchedulerTaskDetails } from './schedulerTaskRow';
 export { DailySchedule } from './dailySchedule';
+export { SchedulerHeader } from './schedulerHeader';

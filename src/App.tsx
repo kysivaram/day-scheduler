@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
-import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SchedulerTemplateModal, SchedulerTemplateForm, SchedulerTaskDetails, DailySchedule } from "./components";
+import {
+  SchedulerHeader,
+  SchedulerTemplateModal, 
+  SchedulerTemplateForm, 
+  SchedulerTaskDetails, 
+  DailySchedule,
+} from "./components";
 import { useLocalStorage } from "./hooks";
 import { checkIfTaskDataNotPresent, getEmptyTaskDetails } from "./utils";
 import moment from "moment";
@@ -27,10 +31,9 @@ function App() {
   });
   return (
     <>
-      <h1>Day Scheduler</h1>
-      <Button variant="primary" className="float-end" onClick={handleShowTemplateModal}>
-        Edit scheduler template
-      </Button>
+      <SchedulerHeader 
+        handleShowTemplateModal={handleShowTemplateModal}
+      />
       <DailySchedule
         showSchedule={!showTemplateModal}
         templateData={templateData}
