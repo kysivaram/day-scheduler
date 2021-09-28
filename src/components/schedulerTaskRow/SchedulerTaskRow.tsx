@@ -14,8 +14,8 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
     onRemoveButtonClicked,
     isTemplateTaskRow = false,
   } = schedulerTaskRowProps;
-  const inputColumnClassName: string = isTemplateTaskRow? 'col-sm-12 col-md-5': 'col-sm-12 col-md-3';
-  const buttonColumnClassName: string = isTemplateTaskRow? 'col-sm-3 col-md-1 m-auto': 'col-sm-3 col-md-1 m-auto';
+  const inputColumnClassName: string = isTemplateTaskRow? 'col-12 col-md-5': 'col-12 col-md-3';
+  const buttonColumnClassName: string = isTemplateTaskRow? 'col-3 col-md-1 m-auto': 'col-3 col-md-1 m-auto';
   return (
     <Row className="g-2 mt-1">
       <Col className={inputColumnClassName}>
