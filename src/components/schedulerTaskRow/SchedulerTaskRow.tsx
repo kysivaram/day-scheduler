@@ -58,12 +58,12 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
       }
       <Col className={buttonColumnClassName}>
         <Button variant="primary" size="sm" onClick={() => onAddButtonClicked(id)} >
-          +
+          Add
         </Button>
       </Col>
       <Col className={buttonColumnClassName}>
         <Button variant="primary" size="sm" onClick={() => onRemoveButtonClicked(id)} >
-          -
+          Delete
         </Button>
       </Col>
     </Row>
