@@ -67,7 +67,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
             </Form.Select>
           </Form.Group>
         </Col>
-        <Col className={isTemplateTaskRow? 'col-11 col-md-4': 'col-6 col-md-3'}>
+        <Col className={isTemplateTaskRow? 'col-11 col-md-4': 'col-7 col-md-3'}>
           <Form.Group className="" controlId="taskDuration">
             <Form.Label>Task duration in minutes</Form.Label>
             <Form.Control type="number" placeholder="Task duration in minutes" value={taskDuration} 
@@ -81,7 +81,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
           </Form.Group>
         </Col>
         {!isTemplateTaskRow && 
-          <Col className="col-5 col-md-2">
+          <Col className="col-4 col-md-2">
             <Form.Group className="" controlId="taskStartTime">
               <Form.Label>Task Start time</Form.Label>
               <Form.Control type="text" placeholder="Task start time" value={taskStartTime} 
