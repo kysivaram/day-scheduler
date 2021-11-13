@@ -8,7 +8,7 @@ export function SchedulerTemplateModal(schedulerTemplateModalProps: SchedulerTem
         children,
     } = schedulerTemplateModalProps;
     return (
-        <Modal show={showTemplateModal} onHide={onModalClose} size="lg" >
+        <Modal show={showTemplateModal} onHide={onModalClose} size="lg" className="customSchedulerModal" >
             <Modal.Header closeButton>
                 <Modal.Title>Scheduler Template</Modal.Title>
             </Modal.Header>

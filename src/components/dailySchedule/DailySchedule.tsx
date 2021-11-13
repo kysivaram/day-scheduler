@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
-import { Row, Col, FloatingLabel, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import { SchedulerTaskDetails, SchedulerTaskRow } from "..";
 import {
   handleTaskDetailsUpdate,
@@ -8,14 +8,16 @@ import {
   handleRemoveTaskDetails,
   checkIfTaskDataNotPresent,
 } from "../../utils";
+import dailyScheduleStyles from "./dailySchedule.module.css";
 
 export function DailySchedule(dailyScheduleProps: DailyScheduleProps) {
   const {
+    userName,
     showSchedule,
     templateData,
     wakeUpTime: receivedWakeUpTime,
     todaysSchedule: receivedTodaysSchedule,
-    onScheduleUpdate,
+    onScheduleSave,
   } = dailyScheduleProps;
   const isTodaysScheduleNotPresent: boolean = checkIfTaskDataNotPresent(
     receivedTodaysSchedule
@@ -33,24 +35,28 @@ export function DailySchedule(dailyScheduleProps: DailyScheduleProps) {
     return <></>;
   }
   return (
-    <>
+    <div className="p-3">
+      <Row>
+        <span>Hi {userName}!</span>
+      </Row>
       <Row className="g-2 mt-1 clearfix">
         <Col className="col-sm-12 col-md-4">
-          <FloatingLabel controlId="wakeUpTime" label="Wake up time">
-            <Form.Control
-              type="text"
-              placeholder="Wake up time"
-              value={wakeUpTime}
-              onChange={(event) =>
-                handleWakeUpTimeChange({
-                  wakeUpTime: event.target.value,
-                  setWakeUpTime,
-                  schedule,
-                  setSchedule,
-                })
-              }
-            />
-          </FloatingLabel>
+          <Form.Group className="" controlId="wakeUpTime">
+              <Form.Label>Wake up time</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Wake up time"
+                value={wakeUpTime}
+                onChange={(event) =>
+                  handleWakeUpTimeChange({
+                    wakeUpTime: event.target.value,
+                    setWakeUpTime,
+                    schedule,
+                    setSchedule,
+                  })
+                }
+              />
+            </Form.Group>
         </Col>
       </Row>
       {schedule.map((schedulerTemplateTaskDetails: SchedulerTaskDetails) => (
@@ -68,18 +74,29 @@ export function DailySchedule(dailyScheduleProps: DailyScheduleProps) {
           }
         />
       ))}
-      <Row className="g-2 mt-1 clearfix">
-        <Col className="col-sm-12 col-md-4">
+      <Row className="g-2 mt-4 clearfix float-end">
+        <Col className="col-12">
           <Button
-            variant="primary"
-            className="mt-2"
-            onClick={() => onScheduleUpdate(wakeUpTime, schedule)}
+            className={`${dailyScheduleStyles.marginRight} btn-primary-custom`}
+            onClick={() => 
+              handleScheduleChangeAsPerWakeUpTime(
+                wakeUpTime,
+                schedule,
+                setSchedule,
+              )
+            }
           >
             Update
           </Button>
+          <Button
+            className="btn-primary-custom"
+            onClick={() => onScheduleSave(wakeUpTime, schedule)}
+          >
+            Save
+          </Button>
         </Col>
       </Row>
-    </>
+    </div>
   );
 }
 
@@ -90,6 +107,18 @@ function handleWakeUpTimeChange(
   const { wakeUpTime, setWakeUpTime, schedule, setSchedule } =
     handleWakeUpTimeChangeParams;
   setWakeUpTime(wakeUpTime);
+  handleScheduleChangeAsPerWakeUpTime(
+    wakeUpTime,
+    schedule,
+    setSchedule,
+  );
+  
+}
+function handleScheduleChangeAsPerWakeUpTime(
+  wakeUpTime: string,
+  schedule: SchedulerTaskDetails[],
+  setSchedule: (schedule: SchedulerTaskDetails[]) => void,
+) {
   //const wakeUpTimeInMoment: string = moment(wakeUpTime,'h:mm a').format('h:mm a');
   let timeTracker = wakeUpTime;
   const updatedSchedule: SchedulerTaskDetails[] = schedule.map(
@@ -104,7 +133,7 @@ function handleWakeUpTimeChange(
 
       const updatedTaskStartTime = moment(timeTracker, "hh:mm")
         .add(taskDuration, "minutes")
-        .format("h:mm a");
+        .format("hh:mm");
       timeTracker = String(updatedTaskStartTime);
       return {
         ...taskDetails,
@@ -116,11 +145,12 @@ function handleWakeUpTimeChange(
 }
 //Types
 interface DailyScheduleProps {
+  userName: string;
   showSchedule: boolean;
   templateData: SchedulerTaskDetails[];
   wakeUpTime: string;
   todaysSchedule: SchedulerTaskDetails[];
-  onScheduleUpdate: (
+  onScheduleSave: (
     wakeUpTime: string,
     todaysSchedule: SchedulerTaskDetails[]
   ) => void;

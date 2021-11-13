@@ -1,4 +1,14 @@
-import { Form, Button, FloatingLabel, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
+
+enum SchedulerTaskType {
+  DailyChores = "DailyChores",
+  Personal = "Personal",
+  Internet = "Internet",
+  Food = "Food",
+  Academic = "Academic",
+  NothingSpecific = "NothingSpecific",
+  Official = "Official"
+}
 
 export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
   const {
@@ -7,6 +17,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
       id,
       taskName = "",
       taskDuration,
+      taskType,
       taskStartTime = "",
     },
     onTaskDetailsUpdate,
@@ -14,59 +25,83 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
     onRemoveButtonClicked,
     isTemplateTaskRow = false,
   } = schedulerTaskRowProps;
-  const inputColumnClassName: string = isTemplateTaskRow? 'col-12 col-md-5': 'col-12 col-md-3';
-  const buttonColumnClassName: string = isTemplateTaskRow? 'col-3 col-md-1 m-auto': 'col-3 col-md-1 m-auto';
   return (
-    <Row className="g-2 mt-1">
-      <Col className={inputColumnClassName}>
-        <FloatingLabel controlId="taskName" label="Task name">
-          <Form.Control type="text" placeholder="Task name" value={taskName} 
-            onChange={(event) => handleTaskDetailsUpdate({
-              updatedAttribute: "taskName",
-              updatedValue: event.target.value, 
-              taskDetails,
-              onTaskDetailsUpdate,
-            })} 
-          />
-        </FloatingLabel>
-      </Col>
-      <Col className={inputColumnClassName}>
-        <FloatingLabel controlId="taskDuration" label="Task duration in minutes">
-          <Form.Control type="number" placeholder="Task duration in minutes" value={taskDuration} 
-            onChange={(event) => handleTaskDetailsUpdate({
-              updatedAttribute: "taskDuration",
-              updatedValue: event.target.value, 
-              taskDetails,
-              onTaskDetailsUpdate,
-            })} 
-          />
-        </FloatingLabel>
-      </Col>
-      {!isTemplateTaskRow && 
-        <Col className={inputColumnClassName}>
-          <FloatingLabel controlId="taskStartTime" label="Task Start time">
-            <Form.Control type="text" placeholder="Task start time" value={taskStartTime} 
+    <div className="mt-4">
+      <button type="button" className="btn-close float-end btn-close-white" aria-label="Close" 
+        onClick={() => onRemoveButtonClicked(id)}>
+      </button>
+      <Row className="g-2 mt-1">
+        <Col className={isTemplateTaskRow? 'col-6 col-md-4': 'col-6 col-md-3'}>
+          <Form.Group className="" controlId="taskName">
+            <Form.Label>Task name</Form.Label>
+            <Form.Control type="text" placeholder="Task name" value={taskName} 
               onChange={(event) => handleTaskDetailsUpdate({
-                updatedAttribute: "taskStartTime",
+                updatedAttribute: "taskName",
                 updatedValue: event.target.value, 
                 taskDetails,
                 onTaskDetailsUpdate,
               })} 
             />
-          </FloatingLabel>
+          </Form.Group>
         </Col>
-      }
-      <Col className={buttonColumnClassName}>
-        <Button variant="primary" size="sm" onClick={() => onAddButtonClicked(id)} >
-          Add
-        </Button>
-      </Col>
-      <Col className={buttonColumnClassName}>
-        <Button variant="primary" size="sm" onClick={() => onRemoveButtonClicked(id)} >
-          Delete
-        </Button>
-      </Col>
-    </Row>
+        <Col className="col-5 col-md-3">
+          <Form.Group className="" controlId="taskType">
+            <Form.Label>Task type</Form.Label>
+            <Form.Select aria-label="Task type"
+              value={taskType}
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) => handleTaskDetailsUpdate({
+                updatedAttribute: "taskType",
+                updatedValue: event.target.value, 
+                taskDetails,
+                onTaskDetailsUpdate,
+              })}
+            >
+              <option>Select task type</option>
+              <option value={SchedulerTaskType.DailyChores}>Daily chores</option>
+              <option value={SchedulerTaskType.Academic}>Academic</option>
+              <option value={SchedulerTaskType.Official}>Official</option>
+              <option value={SchedulerTaskType.Food}>Food</option>
+              <option value={SchedulerTaskType.Internet}>Internet</option>
+              <option value={SchedulerTaskType.Personal}>Personal</option>
+              <option value={SchedulerTaskType.NothingSpecific}>Nothing specific</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+        <Col className={isTemplateTaskRow? 'col-11 col-md-4': 'col-6 col-md-3'}>
+          <Form.Group className="" controlId="taskDuration">
+            <Form.Label>Task duration in minutes</Form.Label>
+            <Form.Control type="number" placeholder="Task duration in minutes" value={taskDuration} 
+              onChange={(event) => handleTaskDetailsUpdate({
+                updatedAttribute: "taskDuration",
+                updatedValue: event.target.value, 
+                taskDetails,
+                onTaskDetailsUpdate,
+              })} 
+            />
+          </Form.Group>
+        </Col>
+        {!isTemplateTaskRow && 
+          <Col className="col-5 col-md-2">
+            <Form.Group className="" controlId="taskStartTime">
+              <Form.Label>Task Start time</Form.Label>
+              <Form.Control type="text" placeholder="Task start time" value={taskStartTime} 
+                onChange={(event) => handleTaskDetailsUpdate({
+                  updatedAttribute: "taskStartTime",
+                  updatedValue: event.target.value, 
+                  taskDetails,
+                  onTaskDetailsUpdate,
+                })} 
+              />
+            </Form.Group>
+          </Col>
+        }
+        <Col className="col-1 col-md-1 mt-auto">
+          <Button className="btn-primary-custom" onClick={() => onAddButtonClicked(id)} >
+            Add
+          </Button>
+        </Col>
+      </Row>
+    </div>
   );
 }
 
@@ -99,6 +134,7 @@ export interface SchedulerTaskDetails {
   id: string;
   taskName?: string;
   taskDuration?: number;
+  taskType?: SchedulerTaskType;
   taskStartTime?: string;
 }
 interface HandleTaskDetailsUpdateArgs {

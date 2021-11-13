@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, FloatingLabel } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { handleAddTaskDetails, handleRemoveTaskDetails, handleTaskDetailsUpdate } from "../../utils";
 import { SchedulerTaskDetails, SchedulerTaskRow } from "../schedulerTaskRow";
 
@@ -13,15 +13,12 @@ const [userName, setUserName] = useState<string>(receivedUserName);
 const [templateData, setTemplateData] = useState<SchedulerTaskDetails[]>(schedulerTemplateData);
   return (
     <Form>
-      <FloatingLabel
-        controlId="nameInput"
-        label="Enter your name"
-        className="mb-3"
-        >
-            <Form.Control type="text" placeholder="Enter your name" value={userName}
-              onChange={(event) => setUserName(event.target.value)}
-            />
-        </FloatingLabel>
+      <Form.Group className="mb-3" controlId="nameInput">
+        <Form.Label>Enter your name</Form.Label>
+        <Form.Control type="text" placeholder="Enter your name" value={userName}
+          onChange={(event) => setUserName(event.target.value)}
+        />
+      </Form.Group>
         {
             templateData.map((schedulerTemplateTaskDetails: SchedulerTaskDetails) => (
                 <SchedulerTaskRow
@@ -48,7 +45,7 @@ const [templateData, setTemplateData] = useState<SchedulerTaskDetails[]>(schedul
                 />
             ))
         }
-      <Button variant="primary" type="submit" className="mt-2 float-end" onClick={(event) => 
+      <Button type="submit" className="btn-primary-custom mt-4 float-end" onClick={(event) => 
         onFormSubmit(event, userName, templateData)
       }>
         Submit

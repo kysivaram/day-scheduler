@@ -5,15 +5,14 @@ export function SchedulerHeader(schedulerHeaderProps: SchedulerHeaderProps) {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar>
         <Container>
-          <Navbar.Brand>Day Scheduler</Navbar.Brand>
+          <Navbar.Brand className="color-white">Day Scheduler</Navbar.Brand>
         </Container>
         <Navbar.Collapse id="navbarScroll">
           <Form className="d-flex">
             <Button
-              variant="light"
-              className="float-end"
+              className="btn-primary-custom float-end"
               onClick={handleShowTemplateModal}
             >
               Edit scheduler template

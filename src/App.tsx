@@ -1,3 +1,4 @@
+import './App.css';
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -35,12 +36,13 @@ function App() {
         handleShowTemplateModal={handleShowTemplateModal}
       />
       <DailySchedule
+        userName={userName}
         showSchedule={!showTemplateModal}
         templateData={templateData}
         wakeUpTime={wakeUpTime}
         todaysSchedule={todaysSchedule}
-        onScheduleUpdate={(updatedWakeUpTime: string, todaysUpdatedSchedule: SchedulerTaskDetails[]) => {
-          handleScheduleUpdate({
+        onScheduleSave={(updatedWakeUpTime: string, todaysUpdatedSchedule: SchedulerTaskDetails[]) => {
+          handleDailyScheduleSave({
             wakeUpTime: updatedWakeUpTime,
             todaysSchedule: todaysUpdatedSchedule,
             saveWakeUpTime,
@@ -95,17 +97,18 @@ async function handleTemplateFormSubmit(
   handleCloseTemplateModal();
 }
 
-async function handleScheduleUpdate(
-  handleScheduleUpdateParams: HandleScheduleUpdateParams,
+async function handleDailyScheduleSave(
+  handleDailyScheduleSaveParams: ParamsToHandleDailyScheduleSave,
 ) {
   const {
     wakeUpTime,
     todaysSchedule,
     saveWakeUpTime,
     saveTodaysSchedule,
-  } = handleScheduleUpdateParams;
+  } = handleDailyScheduleSaveParams;
   await saveWakeUpTime(wakeUpTime);
   await saveTodaysSchedule(todaysSchedule);
+  alert("Schedule saved successfully!");
 } 
 async function checkAndResetTodaysSchedule(
   checkAndResetTodaysScheduleParams: CheckAndResetTodaysScheduleParams,
@@ -135,7 +138,7 @@ interface HandleTemplateFormSubmitParams {
   saveTodaysSchedule: (templateData: SchedulerTaskDetails[]) => void;
   handleCloseTemplateModal: () => void;
 }
-interface HandleScheduleUpdateParams {
+interface ParamsToHandleDailyScheduleSave {
   wakeUpTime: string;
   todaysSchedule: SchedulerTaskDetails[];
   saveWakeUpTime: (wakeUpTime: string) => void;
