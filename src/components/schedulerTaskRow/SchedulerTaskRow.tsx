@@ -18,7 +18,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
       taskName = "",
       taskDuration,
       taskType,
-      taskStartTime = "",
+      taskEndTime = "",
     },
     onTaskDetailsUpdate,
     onAddButtonClicked,
@@ -82,11 +82,11 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
         </Col>
         {!isTemplateTaskRow && 
           <Col className="col-4 col-md-2">
-            <Form.Group className="" controlId="taskStartTime">
-              <Form.Label>Task Start time</Form.Label>
-              <Form.Control type="text" placeholder="Task start time" value={taskStartTime} 
+            <Form.Group className="" controlId="taskEndTime">
+              <Form.Label>Task End time</Form.Label>
+              <Form.Control type="text" placeholder="Task end time" value={taskEndTime} 
                 onChange={(event) => handleTaskDetailsUpdate({
-                  updatedAttribute: "taskStartTime",
+                  updatedAttribute: "taskEndTime",
                   updatedValue: event.target.value, 
                   taskDetails,
                   onTaskDetailsUpdate,
@@ -135,7 +135,7 @@ export interface SchedulerTaskDetails {
   taskName?: string;
   taskDuration?: number;
   taskType?: SchedulerTaskType;
-  taskStartTime?: string;
+  taskEndTime?: string;
 }
 interface HandleTaskDetailsUpdateArgs {
   updatedAttribute: keyof SchedulerTaskDetails;

@@ -127,17 +127,17 @@ function handleScheduleChangeAsPerWakeUpTime(
       // if(index === 0) {
       //     return {
       //         ...taskDetails,
-      //         taskStartTime: wakeUpTimeInMoment,
+      //         taskEndTime: wakeUpTimeInMoment,
       //     }
       // }
 
-      const updatedTaskStartTime = moment(timeTracker, "hh:mm")
+      const updatedTaskEndTime = moment(timeTracker, "hh:mm")
         .add(taskDuration, "minutes")
         .format("hh:mm");
-      timeTracker = String(updatedTaskStartTime);
+      timeTracker = String(updatedTaskEndTime);
       return {
         ...taskDetails,
-        taskStartTime: String(updatedTaskStartTime),
+        taskEndTime: String(updatedTaskEndTime),
       };
     }
   );
