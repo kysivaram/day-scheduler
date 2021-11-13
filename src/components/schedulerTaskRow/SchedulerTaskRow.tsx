@@ -44,7 +44,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
             />
           </Form.Group>
         </Col>
-        <Col className="col-5 col-md-3">
+        <Col className={isTemplateTaskRow? 'col-5 col-md-3': 'col-4 col-md-3'}>
           <Form.Group className="" controlId="taskType">
             <Form.Label>Task type</Form.Label>
             <Form.Select aria-label="Task type"
