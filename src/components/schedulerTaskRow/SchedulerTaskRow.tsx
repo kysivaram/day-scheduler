@@ -31,7 +31,7 @@ export function SchedulerTaskRow(schedulerTaskRowProps: SchedulerTaskRowProps) {
         onClick={() => onRemoveButtonClicked(id)}>
       </button>
       <Row className="g-2 mt-1">
-        <Col className={isTemplateTaskRow? 'col-6 col-md-4': 'col-6 col-md-3'}>
+        <Col className={isTemplateTaskRow? 'col-6 col-md-4': 'col-7 col-md-3'}>
           <Form.Group className="" controlId="taskName">
             <Form.Label>Task name</Form.Label>
             <Form.Control type="text" placeholder="Task name" value={taskName} 
