@@ -35,7 +35,7 @@ export function DailySchedule(dailyScheduleProps: DailyScheduleProps) {
     return <></>;
   }
   return (
-    <div className="p-xs-0 p-sm-3">
+    <div className="p-3">
       <Row>
         <span>Hi {userName}!</span>
       </Row>
